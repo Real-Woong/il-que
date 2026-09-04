@@ -1,11 +1,13 @@
 /* =========================================================
-   1. Maple Theme Tokens
+   1. Theme Tokens
 ========================================================= */
 
 :root {
+  --bg: #0c0c0e;
+
   --maple-bg: #1a1a1e;
   --maple-bg-hover: #222226;
-  --maple-bg-dark: #111113;
+  --maple-dark: #111113;
 
   --maple-border: #44444a;
   --maple-border-soft: #333338;
@@ -15,20 +17,18 @@
 
   --maple-green: #2e7d32;
   --maple-green-hover: #388e3c;
-  --maple-green-complete: #4caf50;
+  --maple-complete: #4caf50;
 
   --maple-orange: #f0a030;
 
-  --maple-white: #ffffff;
-  --maple-text: #cccccc;
-  --maple-muted: #88888c;
-
-  --maple-input: #111113;
+  --white: #ffffff;
+  --text: #cccccc;
+  --muted: #88888c;
 }
 
 
 /* =========================================================
-   2. Global Reset
+   2. Reset
 ========================================================= */
 
 * {
@@ -67,7 +67,7 @@ button {
 
 
 /* =========================================================
-   3. App Layout
+   3. App
 ========================================================= */
 
 .app {
@@ -85,7 +85,436 @@ button {
 
 
 /* =========================================================
-   4. Quest HUD
+   4. Landing
+========================================================= */
+
+.landing-wrapper {
+  width: 510px;
+}
+
+.landing {
+  width: 510px;
+
+  padding: 18px;
+
+  background: #111114;
+
+  border: 1px solid #34343a;
+  border-radius: 16px;
+
+  box-shadow:
+    0 12px 40px
+    rgba(0, 0, 0, 0.35);
+}
+
+
+/* ---------------------------------------------------------
+   Landing Header
+--------------------------------------------------------- */
+
+.landing-header {
+  margin-bottom: 16px;
+
+  cursor: grab;
+}
+
+.landing-header:active {
+  cursor: grabbing;
+}
+
+.landing-header h1 {
+  margin: 0;
+
+  font-family:
+    "Geist Mono",
+    monospace;
+
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: 1px;
+
+  color: var(--maple-lime);
+}
+
+.landing-header p {
+  margin: 4px 0 0;
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 10px;
+
+  color: var(--muted);
+}
+
+
+/* ---------------------------------------------------------
+   Theme Grid
+--------------------------------------------------------- */
+
+.theme-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 10px;
+}
+
+
+/* ---------------------------------------------------------
+   Theme Card
+--------------------------------------------------------- */
+
+.theme-card {
+  position: relative;
+
+  height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding: 10px;
+
+  border: 1px solid #34343a;
+  border-radius: 10px;
+
+  background: #19191d;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.theme-card:hover {
+  transform:
+    translateY(-2px);
+
+  background: #202025;
+}
+
+
+/* Maple */
+
+.maple-card:hover {
+  border-color:
+    var(--maple-lime);
+}
+
+
+/* Lost Ark */
+
+.lostark-card:hover {
+  border-color: #c79247;
+}
+
+
+/* Genshin */
+
+.genshin-card:hover {
+  border-color: #d8c28e;
+}
+
+
+/* ---------------------------------------------------------
+   Status
+--------------------------------------------------------- */
+
+.theme-status {
+  align-self: flex-start;
+
+  padding: 2px 4px;
+
+  border-radius: 3px;
+
+  background: #242429;
+
+  font-family:
+    "Geist Mono",
+    monospace;
+
+  font-size: 7px;
+  font-weight: 700;
+
+  color: var(--muted);
+}
+
+
+/* ---------------------------------------------------------
+   Preview
+--------------------------------------------------------- */
+
+.theme-preview {
+  min-height: 64px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 8px;
+
+  border-radius: 6px;
+}
+
+
+/* Maple Preview */
+
+.maple-preview {
+  flex-direction: column;
+  align-items: flex-start;
+
+  background: #1a1a1e;
+
+  border:
+    1px solid #44444a;
+}
+
+.maple-preview > span {
+  font-family:
+    "Geist Mono",
+    monospace;
+
+  font-size: 7px;
+  font-weight: 800;
+
+  color: var(--maple-lime);
+}
+
+.maple-preview div {
+  display: flex;
+  align-items: center;
+
+  gap: 5px;
+}
+
+.maple-preview strong {
+  padding: 1px 4px;
+
+  background:
+    var(--maple-green);
+
+  border-radius: 3px;
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 7px;
+
+  color: white;
+}
+
+.maple-preview p {
+  margin: 0;
+
+  font-size: 8px;
+
+  color:
+    var(--maple-lime-light);
+}
+
+
+/* Lost Ark Preview */
+
+.lostark-preview {
+  background:
+    rgba(17, 18, 21, 0.75);
+}
+
+.lostark-symbol {
+  color: #d8913f;
+
+  font-size: 18px;
+}
+
+.lostark-preview strong {
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 9px;
+
+  color: #e39b42;
+}
+
+.lostark-preview p {
+  margin: 3px 0 0;
+
+  font-size: 8px;
+
+  color: #c7c7c7;
+}
+
+
+/* Genshin Preview */
+
+.genshin-preview {
+  background:
+    rgba(239, 233, 216, 0.08);
+}
+
+.genshin-symbol {
+  color: #d8c28e;
+
+  font-size: 22px;
+}
+
+.genshin-preview strong {
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 9px;
+
+  color: #eee7d5;
+}
+
+.genshin-preview p {
+  margin: 3px 0 0;
+
+  font-size: 8px;
+
+  color: #aca79c;
+}
+
+
+/* ---------------------------------------------------------
+   Theme Info
+--------------------------------------------------------- */
+
+.theme-info {
+  display: flex;
+  flex-direction: column;
+
+  gap: 2px;
+}
+
+.theme-info strong {
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 10px;
+
+  color: #f2f2f2;
+}
+
+.theme-info span {
+  font-family:
+    "Geist Mono",
+    monospace;
+
+  font-size: 7px;
+
+  color: var(--muted);
+}
+
+
+/* ---------------------------------------------------------
+   Landing Footer
+--------------------------------------------------------- */
+
+.landing-footer {
+  margin-top: 13px;
+
+  text-align: center;
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 8px;
+
+  color: #55555a;
+}
+
+
+/* =========================================================
+   5. Coming Soon
+========================================================= */
+
+.coming-soon {
+  width: 310px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 18px;
+
+  border: 1px solid #44444a;
+  border-radius: 12px;
+
+  background: #17171b;
+
+  color: white;
+
+  cursor: grab;
+}
+
+.coming-label {
+  margin-bottom: 8px;
+
+  font-family:
+    "Geist Mono",
+    monospace;
+
+  font-size: 8px;
+
+  color: var(--maple-lime);
+}
+
+.coming-soon strong {
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 14px;
+}
+
+.coming-soon p {
+  margin: 4px 0 14px;
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 9px;
+
+  color: var(--muted);
+}
+
+.coming-actions {
+  display: flex;
+
+  gap: 6px;
+}
+
+.coming-actions button {
+  padding: 5px 8px;
+
+  border: 1px solid #44444a;
+  border-radius: 4px;
+
+  background: #29292e;
+
+  color: #cccccc;
+
+  font-size: 9px;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   6. Maple Quest HUD
 ========================================================= */
 
 .quest-hud {
@@ -104,9 +533,13 @@ button {
 
   padding: 8px 10px;
 
-  background: var(--maple-bg);
+  background:
+    var(--maple-bg);
 
-  border: 1px solid var(--maple-border);
+  border:
+    1px solid
+    var(--maple-border);
+
   border-radius: 12px;
 
   overflow: visible;
@@ -120,9 +553,6 @@ button {
   cursor: grabbing;
 }
 
-
-/* Top line */
-
 .quest-hud::before {
   content: "";
 
@@ -133,14 +563,15 @@ button {
 
   width: 100%;
 
-  border-top: 1px solid #3a3a3e;
+  border-top:
+    1px solid #3a3a3e;
 
   pointer-events: none;
 }
 
 
 /* =========================================================
-   5. Header
+   7. Maple Header
 ========================================================= */
 
 .quest-header {
@@ -154,11 +585,6 @@ button {
   flex-shrink: 0;
 }
 
-
-/* ---------------------------------------------------------
-   Header Left
---------------------------------------------------------- */
-
 .header-left {
   height: 12px;
 
@@ -169,22 +595,20 @@ button {
 }
 
 .helper-title {
-  height: 12px;
+  font-family:
+    "Geist Mono",
+    monospace;
 
-  font-family: "Geist Mono", monospace;
   font-size: 9px;
   font-weight: 800;
+
   line-height: 12px;
 
-  color: var(--maple-lime);
+  color:
+    var(--maple-lime);
 
   white-space: nowrap;
 }
-
-
-/* ---------------------------------------------------------
-   Quest Count
---------------------------------------------------------- */
 
 .quest-count {
   min-width: 13px;
@@ -196,26 +620,28 @@ button {
 
   padding: 1px 4px;
 
-  background: var(--maple-bg-dark);
+  background:
+    var(--maple-dark);
 
   border-radius: 3px;
 
-  font-family: "Geist Mono", monospace;
+  font-family:
+    "Geist Mono",
+    monospace;
+
   font-size: 8px;
   font-weight: 700;
-  line-height: 10px;
 
-  color: var(--maple-lime);
+  color:
+    var(--maple-lime);
 }
 
 
 /* =========================================================
-   6. Header Controls
+   8. Header Controls
 ========================================================= */
 
 .header-right {
-  height: 12px;
-
   display: flex;
   align-items: center;
 
@@ -232,55 +658,49 @@ button {
   align-items: center;
   justify-content: center;
 
-  color: var(--maple-muted);
+  color: var(--muted);
 
   cursor: pointer;
 }
 
-
-/* Add */
-
 .add {
-  font-family: "Geist Mono", monospace;
+  font-family:
+    "Geist Mono",
+    monospace;
+
   font-size: 12px;
   font-weight: 700;
-  line-height: 12px;
 }
 
 .add:hover {
-  color: var(--maple-lime-light);
+  color:
+    var(--maple-lime-light);
 }
-
-
-/* Minimize */
 
 .minimize span {
   width: 8px;
   height: 2px;
 
-  background: var(--maple-muted);
+  background:
+    var(--muted);
 }
 
 .minimize:hover span {
-  background: var(--maple-white);
+  background: white;
 }
 
-
-/* Close */
-
 .close {
-  font-family: Arial, sans-serif;
+  font-family: Arial;
   font-size: 11px;
-  line-height: 8px;
 }
 
 .close:hover {
-  color: var(--maple-white);
+  color: white;
 }
 
 
 /* =========================================================
-   7. Quest List
+   9. Quest List
 ========================================================= */
 
 .quest-list {
@@ -292,28 +712,18 @@ button {
   gap: 8px;
 }
 
-
-/* =========================================================
-   8. Quest Item
-========================================================= */
-
 .quest-body {
   width: 210px;
 
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
 
   gap: 4px;
-
-  transition:
-    opacity 0.15s ease,
-    filter 0.15s ease;
 }
 
 
 /* =========================================================
-   9. Quest Title
+   10. Quest Title
 ========================================================= */
 
 .title-row {
@@ -326,65 +736,56 @@ button {
   gap: 6px;
 }
 
-
-/* Category */
-
 .quest-tag {
   height: 13px;
 
-  display: flex;
-  align-items: flex-start;
-
   padding: 1px 4px;
 
-  background: var(--maple-green);
+  background:
+    var(--maple-green);
 
   border-radius: 3px;
 
-  font-family: "Inter", sans-serif;
+  font-family:
+    "Inter",
+    sans-serif;
+
   font-size: 9px;
   font-weight: 700;
-  line-height: 11px;
 
   color: #e8f5e9;
 
   white-space: nowrap;
 }
 
-
-/* Title */
-
 .quest-title {
   flex: 1;
 
   min-width: 0;
-  height: 13px;
-
-  display: block;
 
   text-align: left;
 
-  font-family: "Inter", sans-serif;
+  font-family:
+    "Inter",
+    sans-serif;
+
   font-size: 11px;
   font-weight: 700;
-  line-height: 13px;
 
-  color: var(--maple-lime-light);
+  color:
+    var(--maple-lime-light);
 
   white-space: nowrap;
   overflow: hidden;
+
   text-overflow: ellipsis;
 
   cursor: pointer;
 }
 
-.quest-title:hover {
-  color: #e1f87a;
-}
-
 
 /* =========================================================
-   10. Quest Actions
+   11. Quest Actions
 ========================================================= */
 
 .quest-actions {
@@ -392,7 +793,6 @@ button {
 
   display: flex;
   justify-content: flex-end;
-  align-items: center;
 
   gap: 4px;
 }
@@ -401,39 +801,30 @@ button {
   min-width: 34px;
   height: 18px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   padding: 0 6px;
 
-  border: 1px solid var(--maple-border);
+  border:
+    1px solid
+    var(--maple-border);
+
   border-radius: 3px;
 
-  font-family: "Inter", sans-serif;
+  font-family:
+    "Inter",
+    sans-serif;
+
   font-size: 8px;
   font-weight: 700;
 
   cursor: pointer;
 }
 
-
-/* Complete */
-
 .complete-button {
-  background: var(--maple-green);
+  background:
+    var(--maple-green);
 
-  color: var(--maple-white);
+  color: white;
 }
-
-.complete-button:hover {
-  background: var(--maple-green-hover);
-
-  border-color: var(--maple-green-complete);
-}
-
-
-/* Cancel */
 
 .cancel-button {
   background: #29292e;
@@ -441,15 +832,23 @@ button {
   color: #b7b7bc;
 }
 
-.cancel-button:hover {
-  background: #36363c;
+.delete-button {
+  background: #7a2525;
 
-  color: var(--maple-white);
+  border-color: #9b3333 !important;
+
+  color: white;
+}
+
+.delete-button:hover {
+  background: #a83232;
+
+  border-color: #d14b4b !important;
 }
 
 
 /* =========================================================
-   11. Objective
+   12. Objective / Progress
 ========================================================= */
 
 .objective-row {
@@ -468,22 +867,20 @@ button {
 
   min-width: 0;
 
-  font-family: "Inter", sans-serif;
+  font-family:
+    "Inter",
+    sans-serif;
+
   font-size: 10px;
   font-weight: 500;
-  line-height: 12px;
 
-  color: var(--maple-text);
+  color: var(--text);
 
   white-space: nowrap;
   overflow: hidden;
+
   text-overflow: ellipsis;
 }
-
-
-/* =========================================================
-   12. Progress
-========================================================= */
 
 .progress-control {
   display: flex;
@@ -494,12 +891,8 @@ button {
   flex-shrink: 0;
 }
 
-
-/* Progress Number */
-
 .progress {
   min-width: 20px;
-  height: 13px;
 
   display: flex;
   align-items: center;
@@ -507,10 +900,12 @@ button {
 
   gap: 2px;
 
-  font-family: "Geist Mono", monospace;
+  font-family:
+    "Geist Mono",
+    monospace;
+
   font-size: 10px;
   font-weight: 700;
-  line-height: 13px;
 }
 
 .progress-clickable {
@@ -518,93 +913,83 @@ button {
 }
 
 .progress-current {
-  color: var(--maple-orange);
+  color:
+    var(--maple-orange);
 }
 
 .progress-total {
-  color: var(--maple-text);
+  color: var(--text);
 
-  font-family: "Geist Mono", monospace;
+  font-family:
+    "Geist Mono",
+    monospace;
+
   font-size: 10px;
   font-weight: 700;
 }
-
-.progress-total-expanded {
-  white-space: nowrap;
-}
-
-
-/* ---------------------------------------------------------
-   Plus / Minus Progress Buttons
---------------------------------------------------------- */
 
 .progress-button {
   width: 15px;
   height: 15px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border:
+    1px solid
+    var(--maple-border);
 
-  border: 1px solid var(--maple-border);
   border-radius: 3px;
 
   background: #29292e;
 
-  color: var(--maple-muted);
-
-  font-family: "Geist Mono", monospace;
-  font-size: 10px;
-  font-weight: 700;
+  color: var(--muted);
 
   cursor: pointer;
 }
 
 .progress-button:hover {
-  background: var(--maple-green);
+  background:
+    var(--maple-green);
 
-  border-color: var(--maple-green-hover);
-
-  color: var(--maple-white);
+  color: white;
 }
 
 
 /* =========================================================
-   13. Completed Quest
+   13. Completed
 ========================================================= */
 
-.quest-completed {
+.quest-completed
+  .title-row,
+.quest-completed
+  .objective-row {
   opacity: 0.6;
 }
 
-.quest-completed .quest-tag {
-  opacity: 0.5;
-}
-
-.quest-completed .quest-title {
+.quest-completed
+  .quest-title {
   color: #89a63c;
 }
 
-.quest-completed .objective {
+.quest-completed
+  .objective {
   color: #77777c;
 }
 
+.single-complete,
 .complete-check,
-.single-complete {
-  color: var(--maple-green-complete);
-
-  font-family: "Geist Mono", monospace;
-  font-size: 10px;
-  font-weight: 800;
-}
-
 .progress-complete {
-  color: var(--maple-green-complete);
+  color:
+    var(--maple-complete);
+
+  font-family:
+    "Geist Mono",
+    monospace;
+
+  font-weight: 800;
 }
 
 
 /* =========================================================
-   14. Add Quest Form
+   14. Add Form
 ========================================================= */
 
 .quest-form {
@@ -618,13 +1003,9 @@ button {
   padding-top: 6px;
 
   border-top:
-    1px solid var(--maple-border-soft);
+    1px solid
+    var(--maple-border-soft);
 }
-
-
-/* =========================================================
-   15. Form Inputs
-========================================================= */
 
 .quest-form input {
   width: 100%;
@@ -639,28 +1020,28 @@ button {
 
   outline: none;
 
-  background: var(--maple-input);
+  background:
+    var(--maple-dark);
 
-  color: var(--maple-white);
+  color: white;
 
-  font-family: "Inter", sans-serif;
+  font-family:
+    "Inter",
+    sans-serif;
+
   font-size: 10px;
-  line-height: 12px;
 
   user-select: text;
 }
 
-.quest-form input::placeholder {
-  color: #68686e;
-}
-
 .quest-form input:focus {
-  border-color: var(--maple-lime);
+  border-color:
+    var(--maple-lime);
 }
 
 
 /* =========================================================
-   16. Progress Type Selector
+   15. Progress Type
 ========================================================= */
 
 .progress-type {
@@ -676,114 +1057,70 @@ button {
 
   height: 22px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   border:
     1px solid #3f3f44;
 
   border-radius: 4px;
 
-  background: var(--maple-bg-hover);
+  background:
+    var(--maple-bg-hover);
 
   color: #8e8e94;
 
-  font-family: "Inter", sans-serif;
   font-size: 9px;
   font-weight: 700;
 
   cursor: pointer;
-
-  transition:
-    background 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease;
 }
 
-.progress-type button:hover {
-  background: #2b2b30;
+.progress-type
+  button.active {
+  background:
+    var(--maple-green);
 
-  color: var(--maple-white);
-}
+  border-color:
+    var(--maple-complete);
 
-.progress-type button.active {
-  background: var(--maple-green);
-
-  border-color: var(--maple-green-complete);
-
-  color: #f2ffe8;
+  color: white;
 }
 
 
 /* =========================================================
-   17. Count Form
+   16. Count Inputs
 ========================================================= */
 
 .progress-inputs {
-  width: 100%;
-
   display: flex;
   align-items: center;
 
   gap: 4px;
 
-  color: var(--maple-muted);
+  color: var(--muted);
 
-  font-family: "Geist Mono", monospace;
   font-size: 10px;
 }
 
 .progress-inputs input {
   width: 42px;
-
-  flex: none;
-}
-
-
-/* Remove number arrows */
-
-.progress-inputs input[type="number"] {
-  appearance: textfield;
-
-  -moz-appearance: textfield;
-}
-
-.progress-inputs
-  input[type="number"]::-webkit-inner-spin-button,
-.progress-inputs
-  input[type="number"]::-webkit-outer-spin-button {
-  margin: 0;
-
-  -webkit-appearance: none;
 }
 
 
 /* =========================================================
-   18. Form Actions
+   17. Form Actions
 ========================================================= */
 
 .form-actions {
   width: 100%;
 
   display: flex;
-  align-items: center;
   justify-content: flex-end;
 
   gap: 6px;
-
-  margin-top: 2px;
 }
 
 .form-actions button {
   min-width: 42px;
   height: 22px;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 0 9px;
 
   border:
     1px solid #3f3f44;
@@ -794,63 +1131,16 @@ button {
 
   color: #b7b7bc;
 
-  font-family: "Inter", sans-serif;
   font-size: 9px;
   font-weight: 700;
 
   cursor: pointer;
-
-  transition:
-    background 0.15s ease,
-    border-color 0.15s ease,
-    color 0.15s ease;
 }
-
-
-/* Cancel */
-
-.form-actions
-  button:first-child:hover {
-  background: #36363c;
-
-  color: var(--maple-white);
-}
-
-
-/* Save */
 
 .form-actions
   button:last-child {
-  background: var(--maple-green);
+  background:
+    var(--maple-green);
 
-  border-color: var(--maple-green-hover);
-
-  color: var(--maple-white);
-}
-
-.form-actions
-  button:last-child:hover {
-  background: var(--maple-green-hover);
-
-  border-color: var(--maple-green-complete);
-}
-
-/* =========================================================
-   Delete Completed Quest
-========================================================= */
-
-.delete-button {
-  background: #7a2525;
-
-  border-color: #9b3333;
-
-  color: #ffffff;
-}
-
-.delete-button:hover {
-  background: #a83232;
-
-  border-color: #d14b4b;
-
-  color: #ffffff;
+  color: white;
 }

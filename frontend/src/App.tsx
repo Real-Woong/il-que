@@ -10,6 +10,10 @@ import {
   LogicalSize,
 } from "@tauri-apps/api/window"
 
+import Landing, {
+  type Theme,
+} from "./Landing"
+
 type ProgressType = "count" | "single"
 
 type Quest = {
@@ -25,10 +29,25 @@ type Quest = {
 
 function App() {
   /* =======================================================
+     Window
+  ======================================================= */
+
+  const appWindow = getCurrentWindow()
+
+  /* =======================================================
+     Theme
+  ======================================================= */
+
+  const [selectedTheme, setSelectedTheme] =
+    useState<Theme | null>(null)
+
+  /* =======================================================
      Quest Data
   ======================================================= */
 
-  const [quests, setQuests] = useState<Quest[]>([
+  const [quests, setQuests] = useState<
+    Quest[]
+  >([
     {
       id: crypto.randomUUID(),
       category: "과제",
@@ -45,42 +64,53 @@ function App() {
      UI State
   ======================================================= */
 
-  const [isAdding, setIsAdding] = useState(false)
+  const [isAdding, setIsAdding] =
+    useState(false)
 
-  const [selectedQuestId, setSelectedQuestId] =
-    useState<string | null>(null)
+  const [
+    selectedQuestId,
+    setSelectedQuestId,
+  ] = useState<string | null>(null)
 
-  const [editingProgressId, setEditingProgressId] =
-    useState<string | null>(null)
+  const [
+    editingProgressId,
+    setEditingProgressId,
+  ] = useState<string | null>(null)
 
   /* =======================================================
-     Add Quest Form
+     Add Form
   ======================================================= */
 
-  const [category, setCategory] = useState("")
-  const [title, setTitle] = useState("")
-  const [objective, setObjective] = useState("")
+  const [category, setCategory] =
+    useState("")
 
-  const [progressType, setProgressType] =
+  const [title, setTitle] =
+    useState("")
+
+  const [objective, setObjective] =
+    useState("")
+
+  const [
+    progressType,
+    setProgressType,
+  ] =
     useState<ProgressType>("single")
 
-  const [progress, setProgress] = useState(0)
-  const [total, setTotal] = useState(1)
+  const [progress, setProgress] =
+    useState(0)
+
+  const [total, setTotal] =
+    useState(1)
 
   /* =======================================================
-     HUD Reference
+     Resize Reference
   ======================================================= */
 
-  const hudRef = useRef<HTMLElement>(null)
+  const contentRef =
+    useRef<HTMLElement>(null)
 
   /* =======================================================
-     Window
-  ======================================================= */
-
-  const appWindow = getCurrentWindow()
-
-  /* =======================================================
-     Drag Window
+     Window Drag
   ======================================================= */
 
   async function handleWindowDrag(
@@ -88,12 +118,9 @@ function App() {
   ) {
     if (event.button !== 0) return
 
-    const target = event.target as HTMLElement
+    const target =
+      event.target as HTMLElement
 
-    /*
-     * 아래 요소들은 클릭 동작이 있으므로
-     * 창 드래그를 시작하지 않는다.
-     */
     if (
       target.closest(
         `
@@ -112,6 +139,18 @@ function App() {
   }
 
   /* =======================================================
+     Window Controls
+  ======================================================= */
+
+  async function minimizeWindow() {
+    await appWindow.minimize()
+  }
+
+  async function closeWindow() {
+    await appWindow.close()
+  }
+
+  /* =======================================================
      Quest Form
   ======================================================= */
 
@@ -119,9 +158,7 @@ function App() {
     setCategory("")
     setTitle("")
     setObjective("")
-
     setProgressType("single")
-
     setProgress(0)
     setTotal(1)
   }
@@ -134,7 +171,9 @@ function App() {
   function addQuest() {
     if (!title.trim()) return
 
-    const safeTotal = Math.max(1, total)
+    const safeTotal =
+      Math.max(1, total)
+
     const safeProgress = Math.min(
       Math.max(0, progress),
       safeTotal,
@@ -143,12 +182,14 @@ function App() {
     const newQuest: Quest = {
       id: crypto.randomUUID(),
 
-      category: category.trim() || "일반",
+      category:
+        category.trim() || "일반",
 
       title: title.trim(),
 
       objective:
-        objective.trim() || "목표를 완료하세요",
+        objective.trim() ||
+        "목표를 완료하세요",
 
       progressType,
 
@@ -172,40 +213,35 @@ function App() {
   }
 
   /* =======================================================
-     Quest Selection
+     Quest Actions
   ======================================================= */
 
-  function toggleQuestActions(id: string) {
+  function toggleQuestActions(
+    id: string,
+  ) {
     setEditingProgressId(null)
 
-    setSelectedQuestId((current) =>
-      current === id ? null : id,
+    setSelectedQuestId(
+      (current) =>
+        current === id ? null : id,
     )
   }
-
-  function cancelQuestActions() {
-    setSelectedQuestId(null)
-  }
-
-  /* =======================================================
-     Complete Quest
-  ======================================================= */
 
   function completeQuest(id: string) {
     setQuests((previous) =>
       previous.map((quest) => {
-        if (quest.id !== id) {
+        if (quest.id !== id)
           return quest
-        }
 
         return {
           ...quest,
-
           completed: true,
 
-          ...(quest.progressType === "count"
+          ...(quest.progressType ===
+          "count"
             ? {
-                progress: quest.total ?? 1,
+                progress:
+                  quest.total ?? 1,
               }
             : {}),
         }
@@ -216,15 +252,29 @@ function App() {
     setEditingProgressId(null)
   }
 
+  function deleteQuest(id: string) {
+    setQuests((previous) =>
+      previous.filter(
+        (quest) => quest.id !== id,
+      ),
+    )
+
+    setSelectedQuestId(null)
+    setEditingProgressId(null)
+  }
+
   /* =======================================================
-     Progress Editing
+     Progress
   ======================================================= */
 
-  function toggleProgressEditor(id: string) {
+  function toggleProgressEditor(
+    id: string,
+  ) {
     setSelectedQuestId(null)
 
-    setEditingProgressId((current) =>
-      current === id ? null : id,
+    setEditingProgressId(
+      (current) =>
+        current === id ? null : id,
     )
   }
 
@@ -236,14 +286,18 @@ function App() {
       previous.map((quest) => {
         if (
           quest.id !== id ||
-          quest.progressType !== "count" ||
+          quest.progressType !==
+            "count" ||
           quest.completed
         ) {
           return quest
         }
 
-        const current = quest.progress ?? 0
-        const maximum = quest.total ?? 1
+        const current =
+          quest.progress ?? 0
+
+        const maximum =
+          quest.total ?? 1
 
         const next = Math.max(
           0,
@@ -266,57 +320,135 @@ function App() {
   ======================================================= */
 
   useLayoutEffect(() => {
-    const hud = hudRef.current
+    const content =
+      contentRef.current
 
-    if (!hud) return
+    if (!content) return
 
     const resize = async () => {
-      const hudHeight =
-        hud.getBoundingClientRect().height
+      const height =
+        content.getBoundingClientRect()
+          .height
+
+      const width =
+        selectedTheme === null
+          ? 520
+          : selectedTheme === "maple"
+            ? 240
+            : 320
 
       await appWindow.setSize(
         new LogicalSize(
-          240,
-          Math.ceil(hudHeight + 10),
+          width,
+          Math.ceil(height + 10),
         ),
       )
     }
 
-    const observer = new ResizeObserver(resize)
+    const observer =
+      new ResizeObserver(resize)
 
-    observer.observe(hud)
+    observer.observe(content)
 
     resize()
 
-    return () => {
+    return () =>
       observer.disconnect()
-    }
-  }, [appWindow])
+  }, [selectedTheme])
 
-  // DELTE
-  function deleteQuest(id: string) {
-    setQuests((previous) =>
-      previous.filter((quest) => quest.id !== id),
+  /* =======================================================
+     Landing
+  ======================================================= */
+
+  if (selectedTheme === null) {
+    return (
+      <main className="app landing-app">
+        <section
+          ref={contentRef}
+          className="landing-wrapper"
+        >
+          <Landing
+            onSelectTheme={
+              setSelectedTheme
+            }
+          />
+        </section>
+      </main>
     )
-
-    setSelectedQuestId(null)
-    setEditingProgressId(null)
   }
 
   /* =======================================================
-     Render
+     Placeholder Themes
+  ======================================================= */
+
+  if (
+    selectedTheme === "lostark" ||
+    selectedTheme === "genshin"
+  ) {
+    const isLostArk =
+      selectedTheme === "lostark"
+
+    return (
+      <main className="app">
+        <section
+          ref={contentRef}
+          className="coming-soon"
+          onMouseDown={
+            handleWindowDrag
+          }
+        >
+          <span className="coming-label">
+            {isLostArk
+              ? "LOST ARK"
+              : "GENSHIN"}
+          </span>
+
+          <strong>
+            {isLostArk
+              ? "로스트아크 테마"
+              : "원신 테마"}
+          </strong>
+
+          <p>
+            디자인 구현 준비 중
+          </p>
+
+          <div className="coming-actions">
+            <button
+              type="button"
+              onClick={() =>
+                setSelectedTheme(null)
+              }
+            >
+              ← 테마 선택
+            </button>
+
+            <button
+              type="button"
+              onClick={closeWindow}
+            >
+              종료
+            </button>
+          </div>
+        </section>
+      </main>
+    )
+  }
+
+  /* =======================================================
+     Maple Theme
   ======================================================= */
 
   return (
     <main className="app">
       <section
-        ref={hudRef}
+        ref={contentRef}
         className="quest-hud"
-        onMouseDown={handleWindowDrag}
+        onMouseDown={
+          handleWindowDrag
+        }
       >
-        {/* =================================================
-            Header
-        ================================================= */}
+        {/* Header */}
 
         <header className="quest-header">
           <div className="header-left">
@@ -336,10 +468,13 @@ function App() {
               aria-label="Add quest"
               onClick={() => {
                 setSelectedQuestId(null)
-                setEditingProgressId(null)
+                setEditingProgressId(
+                  null,
+                )
 
                 setIsAdding(
-                  (previous) => !previous,
+                  (previous) =>
+                    !previous,
                 )
               }}
             >
@@ -350,6 +485,7 @@ function App() {
               className="minimize"
               type="button"
               aria-label="Minimize"
+              onClick={minimizeWindow}
             >
               <span />
             </button>
@@ -358,26 +494,28 @@ function App() {
               className="close"
               type="button"
               aria-label="Close"
+              onClick={closeWindow}
             >
               ×
             </button>
           </div>
         </header>
 
-        {/* =================================================
-            Quest List
-        ================================================= */}
+        {/* Quest List */}
 
         <div className="quest-list">
           {quests.map((quest) => {
             const actionsOpen =
-              selectedQuestId === quest.id
+              selectedQuestId ===
+              quest.id
 
             const progressOpen =
-              editingProgressId === quest.id
+              editingProgressId ===
+              quest.id
 
             return (
               <div
+                key={quest.id}
                 className={[
                   "quest-body",
                   quest.completed
@@ -386,10 +524,7 @@ function App() {
                 ]
                   .filter(Boolean)
                   .join(" ")}
-                key={quest.id}
               >
-                {/* Quest Title */}
-
                 <div className="title-row">
                   <span className="quest-tag">
                     {quest.category}
@@ -408,7 +543,7 @@ function App() {
                   </button>
                 </div>
 
-                {/* Complete / Cancel */}
+                {/* Quest actions */}
 
                 {actionsOpen && (
                   <div className="quest-actions">
@@ -416,7 +551,11 @@ function App() {
                       <button
                         type="button"
                         className="delete-button"
-                        onClick={() => deleteQuest(quest.id)}
+                        onClick={() =>
+                          deleteQuest(
+                            quest.id,
+                          )
+                        }
                       >
                         삭제
                       </button>
@@ -425,7 +564,11 @@ function App() {
                         <button
                           type="button"
                           className="complete-button"
-                          onClick={() => completeQuest(quest.id)}
+                          onClick={() =>
+                            completeQuest(
+                              quest.id,
+                            )
+                          }
                         >
                           완료
                         </button>
@@ -433,7 +576,11 @@ function App() {
                         <button
                           type="button"
                           className="cancel-button"
-                          onClick={cancelQuestActions}
+                          onClick={() =>
+                            setSelectedQuestId(
+                              null,
+                            )
+                          }
                         >
                           취소
                         </button>
@@ -442,14 +589,12 @@ function App() {
                   </div>
                 )}
 
-                {/* Objective */}
-
                 <div className="objective-row">
                   <span className="objective">
                     {quest.objective}
                   </span>
 
-                  {/* Single Quest */}
+                  {/* Single */}
 
                   {quest.progressType ===
                     "single" &&
@@ -459,7 +604,7 @@ function App() {
                       </span>
                     )}
 
-                  {/* Count Quest */}
+                  {/* Count */}
 
                   {quest.progressType ===
                     "count" && (
@@ -472,7 +617,9 @@ function App() {
 
                           <span className="progress">
                             <span className="progress-complete">
-                              {quest.progress}
+                              {
+                                quest.progress
+                              }
                             </span>
 
                             <span className="progress-total">
@@ -507,12 +654,17 @@ function App() {
                             }
                           >
                             <span className="progress-current">
-                              {quest.progress}
+                              {
+                                quest.progress
+                              }
                             </span>
 
                             {!progressOpen && (
                               <span className="progress-total">
-                                /{quest.total}
+                                /
+                                {
+                                  quest.total
+                                }
                               </span>
                             )}
                           </button>
@@ -533,7 +685,10 @@ function App() {
                               </button>
 
                               <span className="progress-total progress-total-expanded">
-                                /{quest.total}
+                                /
+                                {
+                                  quest.total
+                                }
                               </span>
                             </>
                           )}
@@ -547,9 +702,7 @@ function App() {
           })}
         </div>
 
-        {/* =================================================
-            Add Quest Form
-        ================================================= */}
+        {/* Add Quest */}
 
         {isAdding && (
           <div className="quest-form">
@@ -584,18 +737,19 @@ function App() {
               placeholder="목표"
             />
 
-            {/* Progress Type */}
-
             <div className="progress-type">
               <button
                 type="button"
                 className={
-                  progressType === "single"
+                  progressType ===
+                  "single"
                     ? "active"
                     : ""
                 }
                 onClick={() =>
-                  setProgressType("single")
+                  setProgressType(
+                    "single",
+                  )
                 }
               >
                 단발성
@@ -604,21 +758,23 @@ function App() {
               <button
                 type="button"
                 className={
-                  progressType === "count"
+                  progressType ===
+                  "count"
                     ? "active"
                     : ""
                 }
                 onClick={() =>
-                  setProgressType("count")
+                  setProgressType(
+                    "count",
+                  )
                 }
               >
                 수량형
               </button>
             </div>
 
-            {/* Count Settings */}
-
-            {progressType === "count" && (
+            {progressType ===
+              "count" && (
               <div className="progress-inputs">
                 <input
                   type="number"
@@ -627,7 +783,8 @@ function App() {
                   onChange={(event) =>
                     setProgress(
                       Number(
-                        event.target.value,
+                        event.target
+                          .value,
                       ),
                     )
                   }
@@ -642,7 +799,8 @@ function App() {
                   onChange={(event) =>
                     setTotal(
                       Number(
-                        event.target.value,
+                        event.target
+                          .value,
                       ),
                     )
                   }
@@ -650,12 +808,12 @@ function App() {
               </div>
             )}
 
-            {/* Actions */}
-
             <div className="form-actions">
               <button
                 type="button"
-                onClick={closeAddForm}
+                onClick={
+                  closeAddForm
+                }
               >
                 취소
               </button>
