@@ -1,111 +1,856 @@
+/* =========================================================
+   1. Maple Theme Tokens
+========================================================= */
+
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --maple-bg: #1a1a1e;
+  --maple-bg-hover: #222226;
+  --maple-bg-dark: #111113;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --maple-border: #44444a;
+  --maple-border-soft: #333338;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --maple-lime: #b5e550;
+  --maple-lime-light: #d4f060;
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --maple-green: #2e7d32;
+  --maple-green-hover: #388e3c;
+  --maple-green-complete: #4caf50;
+
+  --maple-orange: #f0a030;
+
+  --maple-white: #ffffff;
+  --maple-text: #cccccc;
+  --maple-muted: #88888c;
+
+  --maple-input: #111113;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
+/* =========================================================
+   2. Global Reset
+========================================================= */
 
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+* {
   box-sizing: border-box;
 }
 
-body {
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 0;
+
   margin: 0;
+  padding: 0;
+
+  background: transparent;
+
+  overflow: hidden;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
+button,
+input {
+  font: inherit;
+}
+
+button {
+  appearance: none;
+
+  margin: 0;
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   3. App Layout
+========================================================= */
+
+.app {
+  width: 100%;
+  height: auto;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding: 5px;
+
+  background: transparent;
+}
+
+
+/* =========================================================
+   4. Quest HUD
+========================================================= */
+
+.quest-hud {
+  position: relative;
+
+  width: 230px;
+
+  min-height: 86px;
+  height: fit-content;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 6px;
+
+  padding: 8px 10px;
+
+  background: var(--maple-bg);
+
+  border: 1px solid var(--maple-border);
+  border-radius: 12px;
+
+  overflow: visible;
+
+  user-select: none;
+
+  cursor: grab;
+}
+
+.quest-hud:active {
+  cursor: grabbing;
+}
+
+
+/* Top line */
+
+.quest-hud::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+
+  border-top: 1px solid #3a3a3e;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   5. Header
+========================================================= */
+
+.quest-header {
+  width: 210px;
+  height: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  flex-shrink: 0;
+}
+
+
+/* ---------------------------------------------------------
+   Header Left
+--------------------------------------------------------- */
+
+.header-left {
+  height: 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+}
+
+.helper-title {
+  height: 12px;
+
+  font-family: "Geist Mono", monospace;
+  font-size: 9px;
+  font-weight: 800;
+  line-height: 12px;
+
+  color: var(--maple-lime);
+
+  white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   Quest Count
+--------------------------------------------------------- */
+
+.quest-count {
+  min-width: 13px;
+  height: 12px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding: 1px 4px;
+
+  background: var(--maple-bg-dark);
+
+  border-radius: 3px;
+
+  font-family: "Geist Mono", monospace;
+  font-size: 8px;
+  font-weight: 700;
+  line-height: 10px;
+
+  color: var(--maple-lime);
+}
+
+
+/* =========================================================
+   6. Header Controls
+========================================================= */
+
+.header-right {
+  height: 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+.add,
+.minimize,
+.close {
+  width: 12px;
+  height: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: var(--maple-muted);
+
+  cursor: pointer;
+}
+
+
+/* Add */
+
+.add {
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+}
+
+.add:hover {
+  color: var(--maple-lime-light);
+}
+
+
+/* Minimize */
+
+.minimize span {
+  width: 8px;
+  height: 2px;
+
+  background: var(--maple-muted);
+}
+
+.minimize:hover span {
+  background: var(--maple-white);
+}
+
+
+/* Close */
+
+.close {
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  line-height: 8px;
+}
+
+.close:hover {
+  color: var(--maple-white);
+}
+
+
+/* =========================================================
+   7. Quest List
+========================================================= */
+
+.quest-list {
+  width: 210px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+
+/* =========================================================
+   8. Quest Item
+========================================================= */
+
+.quest-body {
+  width: 210px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 4px;
+
+  transition:
+    opacity 0.15s ease,
+    filter 0.15s ease;
+}
+
+
+/* =========================================================
+   9. Quest Title
+========================================================= */
+
+.title-row {
+  width: 210px;
+  height: 13px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+
+/* Category */
+
+.quest-tag {
+  height: 13px;
+
+  display: flex;
+  align-items: flex-start;
+
+  padding: 1px 4px;
+
+  background: var(--maple-green);
+
+  border-radius: 3px;
+
+  font-family: "Inter", sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+  line-height: 11px;
+
+  color: #e8f5e9;
+
+  white-space: nowrap;
+}
+
+
+/* Title */
+
+.quest-title {
+  flex: 1;
+
+  min-width: 0;
+  height: 13px;
+
+  display: block;
+
+  text-align: left;
+
+  font-family: "Inter", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 13px;
+
+  color: var(--maple-lime-light);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  cursor: pointer;
+}
+
+.quest-title:hover {
+  color: #e1f87a;
+}
+
+
+/* =========================================================
+   10. Quest Actions
+========================================================= */
+
+.quest-actions {
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  gap: 4px;
+}
+
+.quest-actions button {
+  min-width: 34px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 6px;
+
+  border: 1px solid var(--maple-border);
+  border-radius: 3px;
+
+  font-family: "Inter", sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+
+/* Complete */
+
+.complete-button {
+  background: var(--maple-green);
+
+  color: var(--maple-white);
+}
+
+.complete-button:hover {
+  background: var(--maple-green-hover);
+
+  border-color: var(--maple-green-complete);
+}
+
+
+/* Cancel */
+
+.cancel-button {
+  background: #29292e;
+
+  color: #b7b7bc;
+}
+
+.cancel-button:hover {
+  background: #36363c;
+
+  color: var(--maple-white);
+}
+
+
+/* =========================================================
+   11. Objective
+========================================================= */
+
+.objective-row {
+  width: 210px;
+  min-height: 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 4px;
+}
+
+.objective {
+  flex: 1;
+
+  min-width: 0;
+
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
   font-weight: 500;
-  color: var(--text-h);
+  line-height: 12px;
+
+  color: var(--maple-text);
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+
+/* =========================================================
+   12. Progress
+========================================================= */
+
+.progress-control {
+  display: flex;
+  align-items: center;
+
+  gap: 3px;
+
+  flex-shrink: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
+
+/* Progress Number */
+
+.progress {
+  min-width: 20px;
+  height: 13px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 2px;
+
+  font-family: "Geist Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 13px;
+}
+
+.progress-clickable {
+  cursor: pointer;
+}
+
+.progress-current {
+  color: var(--maple-orange);
+}
+
+.progress-total {
+  color: var(--maple-text);
+
+  font-family: "Geist Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.progress-total-expanded {
+  white-space: nowrap;
+}
+
+
+/* ---------------------------------------------------------
+   Plus / Minus Progress Buttons
+--------------------------------------------------------- */
+
+.progress-button {
+  width: 15px;
+  height: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid var(--maple-border);
+  border-radius: 3px;
+
+  background: #29292e;
+
+  color: var(--maple-muted);
+
+  font-family: "Geist Mono", monospace;
+  font-size: 10px;
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+.progress-button:hover {
+  background: var(--maple-green);
+
+  border-color: var(--maple-green-hover);
+
+  color: var(--maple-white);
+}
+
+
+/* =========================================================
+   13. Completed Quest
+========================================================= */
+
+.quest-completed {
+  opacity: 0.6;
+}
+
+.quest-completed .quest-tag {
+  opacity: 0.5;
+}
+
+.quest-completed .quest-title {
+  color: #89a63c;
+}
+
+.quest-completed .objective {
+  color: #77777c;
+}
+
+.complete-check,
+.single-complete {
+  color: var(--maple-green-complete);
+
+  font-family: "Geist Mono", monospace;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.progress-complete {
+  color: var(--maple-green-complete);
+}
+
+
+/* =========================================================
+   14. Add Quest Form
+========================================================= */
+
+.quest-form {
+  width: 210px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding-top: 6px;
+
+  border-top:
+    1px solid var(--maple-border-soft);
+}
+
+
+/* =========================================================
+   15. Form Inputs
+========================================================= */
+
+.quest-form input {
+  width: 100%;
+  height: 22px;
+
+  padding: 3px 6px;
+
+  border:
+    1px solid #3f3f44;
+
   border-radius: 4px;
-  color: var(--text-h);
+
+  outline: none;
+
+  background: var(--maple-input);
+
+  color: var(--maple-white);
+
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  line-height: 12px;
+
+  user-select: text;
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.quest-form input::placeholder {
+  color: #68686e;
+}
+
+.quest-form input:focus {
+  border-color: var(--maple-lime);
+}
+
+
+/* =========================================================
+   16. Progress Type Selector
+========================================================= */
+
+.progress-type {
+  width: 100%;
+
+  display: flex;
+
+  gap: 4px;
+}
+
+.progress-type button {
+  flex: 1;
+
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid #3f3f44;
+
+  border-radius: 4px;
+
+  background: var(--maple-bg-hover);
+
+  color: #8e8e94;
+
+  font-family: "Inter", sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.progress-type button:hover {
+  background: #2b2b30;
+
+  color: var(--maple-white);
+}
+
+.progress-type button.active {
+  background: var(--maple-green);
+
+  border-color: var(--maple-green-complete);
+
+  color: #f2ffe8;
+}
+
+
+/* =========================================================
+   17. Count Form
+========================================================= */
+
+.progress-inputs {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  color: var(--maple-muted);
+
+  font-family: "Geist Mono", monospace;
+  font-size: 10px;
+}
+
+.progress-inputs input {
+  width: 42px;
+
+  flex: none;
+}
+
+
+/* Remove number arrows */
+
+.progress-inputs input[type="number"] {
+  appearance: textfield;
+
+  -moz-appearance: textfield;
+}
+
+.progress-inputs
+  input[type="number"]::-webkit-inner-spin-button,
+.progress-inputs
+  input[type="number"]::-webkit-outer-spin-button {
+  margin: 0;
+
+  -webkit-appearance: none;
+}
+
+
+/* =========================================================
+   18. Form Actions
+========================================================= */
+
+.form-actions {
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 6px;
+
+  margin-top: 2px;
+}
+
+.form-actions button {
+  min-width: 42px;
+  height: 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 9px;
+
+  border:
+    1px solid #3f3f44;
+
+  border-radius: 4px;
+
+  background: #29292e;
+
+  color: #b7b7bc;
+
+  font-family: "Inter", sans-serif;
+  font-size: 9px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+
+/* Cancel */
+
+.form-actions
+  button:first-child:hover {
+  background: #36363c;
+
+  color: var(--maple-white);
+}
+
+
+/* Save */
+
+.form-actions
+  button:last-child {
+  background: var(--maple-green);
+
+  border-color: var(--maple-green-hover);
+
+  color: var(--maple-white);
+}
+
+.form-actions
+  button:last-child:hover {
+  background: var(--maple-green-hover);
+
+  border-color: var(--maple-green-complete);
+}
+
+/* =========================================================
+   Delete Completed Quest
+========================================================= */
+
+.delete-button {
+  background: #7a2525;
+
+  border-color: #9b3333;
+
+  color: #ffffff;
+}
+
+.delete-button:hover {
+  background: #a83232;
+
+  border-color: #d14b4b;
+
+  color: #ffffff;
 }

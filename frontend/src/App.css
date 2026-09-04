@@ -1,184 +1,461 @@
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+* {
+  box-sizing: border-box;
 }
 
-.hero {
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  background: transparent;
+  overflow: hidden;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+}
+
+.app {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: transparent;
+}
+
+/* =========================================================
+   Maple Quest HUD
+========================================================= */
+
+.quest-hud {
   position: relative;
 
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
+  width: 230px;
+  min-height: 86px;
+  height: auto;
 
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#center {
   display: flex;
   flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
+  align-items: flex-start;
 
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
+  padding: 8px 10px;
+  gap: 6px;
+
+  background: #1a1a1e;
+  border: 1px solid #44444a;
+  border-radius: 12px;
+
+  color: #ffffff;
 }
 
-#next-steps {
+/* Figma top line */
+.quest-hud::before {
+  content: "";
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 0;
+
+  border-top: 1px solid #3a3a3e;
+
+  pointer-events: none;
+}
+
+/* =========================================================
+   Header
+========================================================= */
+
+.quest-header {
+  width: 210px;
+  height: 12px;
+
   display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
+  flex-shrink: 0;
 }
 
-#docs {
-  border-right: 1px solid var(--border);
+.header-left {
+  width: 82px;
+  height: 12px;
 
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
+  display: flex;
+  align-items: center;
+
+  gap: 4px;
+
+  cursor: grab;
 }
 
-#next-steps ul {
-  list-style: none;
+.header-left:active {
+  cursor: grabbing;
+}
+
+.helper-title {
+  width: 65px;
+  height: 12px;
+
+  font-family: "Geist Mono", monospace;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 9px;
+  line-height: 12px;
+
+  color: #b5e550;
+
+  white-space: nowrap;
+}
+
+.quest-count {
+  min-width: 13px;
+  height: 12px;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+
+  padding: 1px 4px;
+
+  background: #111113;
+  border-radius: 3px;
+
+  font-family: "Geist Mono", monospace;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 8px;
+  line-height: 10px;
+
+  color: #b5e550;
+}
+
+/* =========================================================
+   Header Controls
+========================================================= */
+
+.header-right {
+  height: 12px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+.add,
+.minimize,
+.close {
+  width: 12px;
+  height: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   padding: 0;
+  border: 0;
+
+  background: transparent;
+  color: #88888c;
+
+  cursor: pointer;
+}
+
+.add {
+  font-family: "Geist Mono", monospace;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 12px;
+}
+
+.add:hover,
+.close:hover {
+  color: #ffffff;
+}
+
+.minimize:hover span {
+  background: #ffffff;
+}
+
+.minimize span {
+  width: 8px;
+  height: 2px;
+
+  background: #88888c;
+}
+
+.close {
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  line-height: 8px;
+}
+
+/* =========================================================
+   Quest List
+========================================================= */
+
+.quest-list {
+  width: 210px;
+
   display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
+  flex-direction: column;
 
-  .logo {
-    height: 18px;
-  }
-
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
-
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
-
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
-  }
+  gap: 6px;
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+.quest-body {
+  width: 210px;
+  min-height: 30px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 4px;
 }
 
-.ticks {
-  position: relative;
+/* =========================================================
+   Quest Title Row
+========================================================= */
+
+.title-row {
+  width: 210px;
+  height: 13px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+}
+
+.quest-tag {
+  height: 13px;
+
+  display: flex;
+  align-items: flex-start;
+
+  padding: 1px 4px;
+
+  background: #2e7d32;
+  border-radius: 3px;
+
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 9px;
+  line-height: 11px;
+
+  color: #e8f5e9;
+
+  white-space: nowrap;
+}
+
+.quest-title {
+  flex: 1;
+
+  height: 13px;
+
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 13px;
+
+  color: #d4f060;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* =========================================================
+   Quest Objective Row
+========================================================= */
+
+.objective-row {
+  width: 210px;
+  min-height: 13px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.objective {
+  flex: 1;
+
+  min-width: 0;
+
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 12px;
+
+  color: #cccccc;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.progress {
+  width: 20px;
+  height: 13px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 2px;
+
+  flex-shrink: 0;
+
+  font-family: "Geist Mono", monospace;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 10px;
+  line-height: 13px;
+}
+
+.progress-current {
+  color: #f0a030;
+}
+
+.progress-total {
+  color: #cccccc;
+}
+
+/* =========================================================
+   Add Quest Form
+========================================================= */
+
+.quest-form {
+  width: 210px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+
+  padding-top: 6px;
+
+  border-top: 1px solid #333338;
+}
+
+.quest-form input {
+  width: 100%;
+  height: 20px;
+
+  padding: 3px 6px;
+
+  border: 1px solid #3f3f44;
+  border-radius: 4px;
+
+  outline: none;
+
+  background: #111113;
+  color: #ffffff;
+
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.quest-form input::placeholder {
+  color: #68686e;
+}
+
+.quest-form input:focus {
+  border-color: #b5e550;
+}
+
+/* remove number input arrows */
+.quest-form input[type="number"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
+}
+
+.quest-form input[type="number"]::-webkit-inner-spin-button,
+.quest-form input[type="number"]::-webkit-outer-spin-button {
+  margin: 0;
+  -webkit-appearance: none;
+}
+
+.progress-inputs {
   width: 100%;
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+  display: flex;
+  align-items: center;
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
-  }
+  gap: 4px;
+
+  color: #88888c;
+
+  font-family: "Geist Mono", monospace;
+  font-size: 10px;
+}
+
+.progress-inputs input {
+  width: 42px;
+
+  flex: none;
+}
+
+.form-actions {
+  width: 100%;
+
+  display: flex;
+  justify-content: flex-end;
+
+  gap: 6px;
+}
+
+.form-actions button {
+  height: 20px;
+
+  padding: 3px 7px;
+
+  border-radius: 4px;
+
+  background: #2e2e32;
+  color: #cccccc;
+
+  font-family: "Inter", sans-serif;
+  font-size: 9px;
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.form-actions button:hover {
+  background: #3a3a40;
+  color: #ffffff;
+}
+
+.form-actions button:last-child {
+  background: #2e7d32;
+  color: #ffffff;
+}
+
+.form-actions button:last-child:hover {
+  background: #388e3c;
 }

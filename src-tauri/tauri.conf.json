@@ -4,19 +4,23 @@
   "version": "0.1.0",
   "identifier": "com.tauri.dev",
   "build": {
-    "frontendDist": "../dist",
+    "frontendDist": "../frontend/dist",
     "devUrl": "http://localhost:5173",
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build"
   },
   "app": {
+    "macOSPrivateApi": true,
     "windows": [
       {
         "title": "Il-Que",
-        "width": 800,
-        "height": 600,
-        "resizable": true,
-        "fullscreen": false
+        "width": 240,
+        "height": 96,
+        "resizable": false,
+        "fullscreen": false,
+	"decorations": false,
+   	"transparent": true,
+    	"alwaysOnTop": true
       }
     ],
     "security": {
