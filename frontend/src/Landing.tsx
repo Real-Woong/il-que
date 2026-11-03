@@ -58,7 +58,7 @@ function Landing({
           }
         >
           <span className="theme-status">
-            PREVIEW
+            AVAILABLE
           </span>
 
           <div className="theme-preview lostark-preview">

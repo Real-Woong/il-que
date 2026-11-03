@@ -9,14 +9,16 @@ import {
   getCurrentWindow,
   LogicalSize,
 } from "@tauri-apps/api/window"
+import { isTauri } from "@tauri-apps/api/core"
 
 import Landing, {
   type Theme,
 } from "./Landing"
+import LostArkQuestWidget from "./components/LostArkQuestWidget"
 
-type ProgressType = "count" | "single"
+export type ProgressType = "count" | "single"
 
-type Quest = {
+export type Quest = {
   id: string
   category: string
   title: string
@@ -27,13 +29,11 @@ type Quest = {
   completed: boolean
 }
 
+const appWindow = isTauri()
+  ? getCurrentWindow()
+  : null
+
 function App() {
-  /* =======================================================
-     Window
-  ======================================================= */
-
-  const appWindow = getCurrentWindow()
-
   /* =======================================================
      Theme
   ======================================================= */
@@ -117,6 +117,7 @@ function App() {
     event: ReactMouseEvent<HTMLElement>,
   ) {
     if (event.button !== 0) return
+    if (!appWindow) return
 
     const target =
       event.target as HTMLElement
@@ -127,6 +128,8 @@ function App() {
           button,
           input,
           .quest-title,
+          .lostark-quest-click-target,
+          .lostark-entry,
           .progress-control,
           .quest-actions
         `,
@@ -143,11 +146,11 @@ function App() {
   ======================================================= */
 
   async function minimizeWindow() {
-    await appWindow.minimize()
+    await appWindow?.minimize()
   }
 
   async function closeWindow() {
-    await appWindow.close()
+    await appWindow?.close()
   }
 
   /* =======================================================
@@ -335,9 +338,11 @@ function App() {
           ? 520
           : selectedTheme === "maple"
             ? 240
-            : 320
+            : selectedTheme === "lostark"
+              ? 300
+              : 320
 
-      await appWindow.setSize(
+      await appWindow?.setSize(
         new LogicalSize(
           width,
           Math.ceil(height + 10),
@@ -378,16 +383,57 @@ function App() {
   }
 
   /* =======================================================
-     Placeholder Themes
+     Lost Ark Theme
   ======================================================= */
 
-  if (
-    selectedTheme === "lostark" ||
-    selectedTheme === "genshin"
-  ) {
-    const isLostArk =
-      selectedTheme === "lostark"
+  if (selectedTheme === "lostark") {
+    return (
+      <main className="app">
+        <LostArkQuestWidget
+          ref={contentRef}
+          quests={quests}
+          selectedQuestId={selectedQuestId}
+          editingProgressId={editingProgressId}
+          isAdding={isAdding}
+          form={{
+            category,
+            title,
+            objective,
+            progressType,
+            progress,
+            total,
+          }}
+          onMouseDown={handleWindowDrag}
+          onToggleQuestActions={toggleQuestActions}
+          onCompleteQuest={completeQuest}
+          onDeleteQuest={deleteQuest}
+          onToggleProgressEditor={toggleProgressEditor}
+          onChangeProgress={changeProgress}
+          onToggleAdd={() => {
+            setSelectedQuestId(null)
+            setEditingProgressId(null)
+            setIsAdding((previous) => !previous)
+          }}
+          onMinimize={minimizeWindow}
+          onClose={closeWindow}
+          onCategoryChange={setCategory}
+          onTitleChange={setTitle}
+          onObjectiveChange={setObjective}
+          onProgressTypeChange={setProgressType}
+          onProgressChange={setProgress}
+          onTotalChange={setTotal}
+          onCancelAdd={closeAddForm}
+          onAddQuest={addQuest}
+        />
+      </main>
+    )
+  }
 
+  /* =======================================================
+     Placeholder Theme
+  ======================================================= */
+
+  if (selectedTheme === "genshin") {
     return (
       <main className="app">
         <section
@@ -398,15 +444,11 @@ function App() {
           }
         >
           <span className="coming-label">
-            {isLostArk
-              ? "LOST ARK"
-              : "GENSHIN"}
+            GENSHIN
           </span>
 
           <strong>
-            {isLostArk
-              ? "로스트아크 테마"
-              : "원신 테마"}
+            원신 테마
           </strong>
 
           <p>

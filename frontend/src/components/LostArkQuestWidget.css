@@ -1,0 +1,458 @@
+.lostark-widget {
+  position: relative;
+  width: 290px;
+  min-height: 116px;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0 25px;
+  background: rgba(0, 0, 0, 0.69);
+  border-radius: 3px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.333);
+  overflow: hidden;
+  color: #c2c2c8;
+  user-select: none;
+  cursor: grab;
+}
+
+.lostark-widget:active {
+  cursor: grabbing;
+}
+
+.lostark-quest-stack {
+  width: 290px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.lostark-quest-block {
+  --lostark-accent: #e8d44a;
+  width: 290px;
+  display: flex;
+  flex-direction: column;
+}
+
+.lostark-kind-main {
+  --lostark-accent: #ff8d28;
+}
+
+.lostark-kind-adventure {
+  --lostark-accent: #8881e8;
+}
+
+.lostark-kind-urgent {
+  --lostark-accent: #dc6664;
+}
+
+.lostark-kind-cooperation {
+  --lostark-accent: #62a8de;
+}
+
+.lostark-kind-rapport {
+  --lostark-accent: #d985ae;
+}
+
+.lostark-quest-header {
+  width: 290px;
+  height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  padding: 3px 7px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.lostark-header-left {
+  min-width: 0;
+  flex: 1;
+  height: 33px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.lostark-quest-number {
+  width: 14px;
+  flex: 0 0 14px;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 20px;
+  color: #55555c;
+  text-align: center;
+}
+
+.lostark-type-icon {
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  display: block;
+  color: var(--lostark-accent);
+  filter: drop-shadow(0 0 3px color-mix(in srgb, var(--lostark-accent) 28%, transparent));
+}
+
+.lostark-type-icon svg {
+  width: 28px;
+  height: 28px;
+  display: block;
+  overflow: visible;
+  fill: color-mix(in srgb, var(--lostark-accent) 14%, transparent);
+  stroke: currentColor;
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lostark-type-icon svg path + path,
+.lostark-type-icon svg circle {
+  fill: none;
+}
+
+.lostark-quest-title {
+  min-width: 0;
+  max-width: 200px;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 16px;
+  color: var(--lostark-accent);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.lostark-header-right {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.lostark-window-controls {
+  display: flex;
+  align-items: center;
+  gap: 1px;
+  opacity: 0.48;
+  transition: opacity 120ms ease;
+}
+
+.lostark-quest-header:hover .lostark-window-controls,
+.lostark-window-controls:focus-within {
+  opacity: 1;
+}
+
+.lostark-window-controls button {
+  width: 12px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  line-height: 1;
+  color: #68686e;
+  cursor: pointer;
+}
+
+.lostark-window-controls button:hover {
+  color: #c2c2c8;
+}
+
+.lostark-compass {
+  width: 21px;
+  height: 21px;
+  flex: 0 0 21px;
+  display: grid;
+  place-items: center;
+  border-radius: 3px;
+  color: #77777e;
+  cursor: pointer;
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.lostark-compass:hover,
+.lostark-compass:focus-visible {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--lostark-accent);
+  outline: none;
+}
+
+.lostark-compass svg {
+  width: 21px;
+  height: 21px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.15;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lostark-entry {
+  width: 290px;
+  min-height: 52px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 8px;
+  cursor: pointer;
+}
+
+.lostark-objective-row,
+.lostark-objective-detail-row {
+  width: 274px;
+  height: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.lostark-objective-headline,
+.lostark-objective-detail {
+  min-width: 0;
+  max-width: 200px;
+  overflow: hidden;
+  font-family: "Inter", sans-serif;
+  line-height: 13px;
+  color: #c2c2c8;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.lostark-objective-headline {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.lostark-objective-detail {
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.lostark-chevron {
+  width: 8px;
+  height: 10px;
+  flex: 0 0 8px;
+  color: #68686e;
+}
+
+.lostark-chevron svg {
+  width: 8px;
+  height: 10px;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.lostark-single-status,
+.lostark-completed-indicator,
+.lostark-progress {
+  flex: 0 0 auto;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 13px;
+  color: #e8d44a;
+  white-space: nowrap;
+}
+
+.lostark-progress-control {
+  height: 17px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.lostark-progress {
+  display: flex;
+  cursor: pointer;
+}
+
+.lostark-progress strong {
+  font-weight: 700;
+}
+
+.lostark-progress span {
+  font-weight: 400;
+}
+
+.lostark-progress-button {
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(232, 212, 74, 0.28);
+  border-radius: 2px;
+  background: rgba(232, 212, 74, 0.08);
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  line-height: 1;
+  color: #e8d44a;
+  cursor: pointer;
+}
+
+.lostark-actions {
+  width: 274px;
+  min-height: 20px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
+  padding-top: 2px;
+  border-top: 1px solid rgba(194, 194, 200, 0.1);
+}
+
+.lostark-actions button {
+  height: 18px;
+  padding: 0 6px;
+  border: 1px solid rgba(194, 194, 200, 0.18);
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.25);
+  font-family: "Inter", sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  color: #919197;
+  cursor: pointer;
+}
+
+.lostark-actions .lostark-complete-action {
+  border-color: rgba(232, 212, 74, 0.35);
+  color: #e8d44a;
+}
+
+.lostark-actions .lostark-delete-action {
+  border-color: rgba(117, 117, 121, 0.35);
+  color: #8b8b90;
+}
+
+.lostark-quest-block.is-completed {
+  opacity: 0.7;
+}
+
+.lostark-quest-block.is-completed .lostark-quest-title,
+.lostark-quest-block.is-completed .lostark-objective-headline,
+.lostark-quest-block.is-completed .lostark-objective-detail {
+  color: #757579;
+}
+
+.lostark-quest-block.is-completed .lostark-objective-headline,
+.lostark-quest-block.is-completed .lostark-objective-detail {
+  text-decoration: line-through;
+}
+
+.lostark-completed-indicator {
+  color: #757579;
+}
+
+.lostark-form,
+.lostark-empty {
+  width: 274px;
+  margin: 8px 8px 0;
+  padding: 9px 0 0;
+  border-top: 1px solid rgba(194, 194, 200, 0.15);
+}
+
+.lostark-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.lostark-form input {
+  width: 100%;
+  height: 24px;
+  padding: 4px 7px;
+  border: 1px solid rgba(194, 194, 200, 0.2);
+  border-radius: 2px;
+  outline: none;
+  background: rgba(0, 0, 0, 0.35);
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  color: #c2c2c8;
+  user-select: text;
+}
+
+.lostark-form input:focus {
+  border-color: rgba(232, 212, 74, 0.55);
+}
+
+.lostark-form input::placeholder {
+  color: #65656a;
+}
+
+.lostark-progress-type,
+.lostark-progress-inputs,
+.lostark-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.lostark-progress-type button,
+.lostark-form-actions button {
+  height: 22px;
+  padding: 0 8px;
+  border: 1px solid rgba(194, 194, 200, 0.18);
+  border-radius: 2px;
+  background: rgba(0, 0, 0, 0.3);
+  font-family: "Inter", sans-serif;
+  font-size: 9px;
+  font-weight: 500;
+  color: #77777e;
+  cursor: pointer;
+}
+
+.lostark-progress-type button {
+  flex: 1;
+}
+
+.lostark-progress-type button.active,
+.lostark-form-actions button:last-child {
+  border-color: rgba(232, 212, 74, 0.45);
+  color: #e8d44a;
+}
+
+.lostark-progress-inputs {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 10px;
+  color: #77777e;
+}
+
+.lostark-progress-inputs input {
+  width: 50px;
+}
+
+.lostark-form-actions {
+  justify-content: flex-end;
+}
+
+.lostark-empty {
+  min-height: 67px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: "Inter", sans-serif;
+  font-size: 10px;
+  color: #757579;
+}
+
+.lostark-empty button {
+  padding: 3px 7px;
+  border: 1px solid rgba(232, 212, 74, 0.3);
+  border-radius: 2px;
+  color: #e8d44a;
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lostark-window-controls,
+  .lostark-compass {
+    transition: none;
+  }
+}
