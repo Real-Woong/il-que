@@ -69,3 +69,6 @@ src-tauri/gen/
 # Optional local-only project data
 data/
 local-data/
+
+# 스크린샷 작업물 (로컬 전용)
+_shots/
